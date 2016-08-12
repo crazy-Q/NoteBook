@@ -22,11 +22,11 @@ public class NotesDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_NAME + "("
+        db.execSQL("CREATE TABLE " + TABLE_NAME + " ( "
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + CONTENT + " TEXT NOT NULL,"
-                + PATH + " TEXT NOT NULL"
-                + VIDEO + " TEXT NOT NULL"
+                + PATH + " TEXT NOT NULL,"
+                + VIDEO + " TEXT NOT NULL,"
                 + TIME + " TEXT NOT NULL)");
     }
 
