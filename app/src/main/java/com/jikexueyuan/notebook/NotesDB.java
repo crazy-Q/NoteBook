@@ -24,10 +24,10 @@ public class NotesDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + " ( "
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + CONTENT + " TEXT NOT NULL,"
-                + PATH + " TEXT NOT NULL,"
-                + VIDEO + " TEXT NOT NULL,"
-                + TIME + " TEXT NOT NULL)");
+                + CONTENT + " TEXT,"
+                + PATH + " TEXT,"
+                + VIDEO + " TEXT,"
+                + TIME + " TEXT)");
     }
 
     @Override

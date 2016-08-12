@@ -61,7 +61,7 @@ public class AddContent extends AppCompatActivity implements View.OnClickListene
 
     public void addDB(){
         ContentValues cv = new ContentValues();
-        cv.put(NotesDB.TABLE_NAME, etText.getText().toString());
+        cv.put(NotesDB.CONTENT, etText.getText().toString());
         cv.put(NotesDB.TIME,getTime());
         dbWriter.insert(NotesDB.TABLE_NAME, null, cv);
     }
