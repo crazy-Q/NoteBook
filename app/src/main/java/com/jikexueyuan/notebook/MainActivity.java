@@ -1,39 +1,53 @@
 package com.jikexueyuan.notebook;
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
 
-import java.text.SimpleDateFormat;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-public class MainActivity extends AppCompatActivity {
-
-    private NotesDB notesDB;
-    private SQLiteDatabase dbWriter;
+    private Button textbtn,imgbtn, videobtn;
+    private ListView lv;
+    private Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        notesDB = new NotesDB(this);
-        dbWriter = notesDB.getWritableDatabase();
-
-        addDB();
-    }
-
-    public void addDB(){
-        ContentValues cv = new ContentValues();
-        cv.put(NotesDB.CONTENT, "Hello");
-        cv.put(NotesDB.TIME, getTime());
-        dbWriter.insert(NotesDB.TABLE_NAME, null, cv);
+        init();
 
     }
 
-    public String getTime(){
-        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-        java.util.Date curDate = new java.util.Date();
-        return format.format(curDate);
+    public void init(){
+        lv = (ListView) findViewById(R.id.id_list);
+        textbtn = (Button) findViewById(R.id.id_text);
+        imgbtn = (Button) findViewById(R.id.id_img);
+        videobtn = (Button) findViewById(R.id.id_video);
+
+        textbtn.setOnClickListener(this);
+        imgbtn.setOnClickListener(this);
+        videobtn.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        i = new Intent(this, AddContent.class);
+        switch (view.getId()) {
+            case R.id.id_text:
+                i.putExtra("flag", "1");
+                startActivity(i);
+                break;
+            case R.id.id_img:
+                i.putExtra("flag", "2");
+                startActivity(i);
+                break;
+            case R.id.id_video:
+                i.putExtra("flag", "3");
+                startActivity(i);
+                break;
+        }
     }
 }
