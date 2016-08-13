@@ -4,4 +4,6 @@
     <string name="save">保存</string>
     <string name="del">删除</string>
     <string name="cancel">取消</string>
+    <string name="delete">删除</string>
+    <string name="back">返回</string>
 </resources>

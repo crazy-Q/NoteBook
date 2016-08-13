@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -17,16 +18,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MyAdapter adapter;
     private NotesDB notesDB;
     private SQLiteDatabase dbReader;
+    private Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
+        initView();
 
     }
 
-    public void init(){
+    private void initView(){
         lv = (ListView) findViewById(R.id.id_list);
         textbtn = (Button) findViewById(R.id.id_text);
         imgbtn = (Button) findViewById(R.id.id_img);
@@ -37,6 +39,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         videobtn.setOnClickListener(this);
         notesDB = new NotesDB(this);
         dbReader = notesDB.getReadableDatabase();
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                cursor.moveToPosition(i);
+                Intent intent = new Intent(MainActivity.this, SelectAct.class);
+                intent.putExtra(NotesDB.ID, cursor.getInt(cursor.getColumnIndex(NotesDB.ID)));
+                intent.putExtra(NotesDB.CONTENT, cursor.getString(cursor.getColumnIndex(NotesDB.CONTENT)));
+                intent.putExtra(NotesDB.TIME, cursor.getString(cursor.getColumnIndex(NotesDB.TIME)));
+                intent.putExtra(NotesDB.PATH, cursor.getString(cursor.getColumnIndex(NotesDB.PATH)));
+                intent.putExtra(NotesDB.VIDEO, cursor.getString(cursor.getColumnIndex(NotesDB.VIDEO)));
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override
@@ -59,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void selectDB(){
-        Cursor cursor = dbReader.query(NotesDB.TABLE_NAME, null, null, null, null, null, null);
+        cursor = dbReader.query(NotesDB.TABLE_NAME, null, null, null, null, null, null);
         adapter = new MyAdapter(this, cursor);
         lv.setAdapter(adapter);
     }
