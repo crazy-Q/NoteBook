@@ -72,6 +72,10 @@ public class AddContent extends AppCompatActivity implements View.OnClickListene
         if (val.equals("3")) {
             c_img.setVisibility(View.GONE);
             v_video.setVisibility(View.VISIBLE);
+            Intent videoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+            videoFile = new File(Environment.getExternalStorageDirectory().getAbsoluteFile() + "/" + getTime() + ".mp4");
+            videoIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(videoFile));
+            startActivityForResult(videoIntent, 2);
         }
     }
 
@@ -93,6 +97,7 @@ public class AddContent extends AppCompatActivity implements View.OnClickListene
         cv.put(NotesDB.CONTENT, etText.getText().toString());
         cv.put(NotesDB.TIME, getTime());
         cv.put(NotesDB.PATH, photoFile + "");
+        cv.put(NotesDB.VIDEO, videoFile + "");
         dbWriter.insert(NotesDB.TABLE_NAME, null, cv);
     }
 
@@ -108,6 +113,10 @@ public class AddContent extends AppCompatActivity implements View.OnClickListene
         if (resultCode == 1) {
             Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
             c_img.setImageBitmap(bitmap);
+        }
+        if (requestCode == 2) {
+            v_video.setVideoURI(Uri.fromFile(videoFile));
+            v_video.start();
         }
     }
 }

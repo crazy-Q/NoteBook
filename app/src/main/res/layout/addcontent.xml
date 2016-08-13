@@ -7,14 +7,12 @@
     <ImageView
         android:id="@+id/id_c_img"
         android:layout_width="300dp"
-        android:layout_height="500dp"
-        android:visibility="gone" />
+        android:layout_height="500dp" />
 
     <VideoView
         android:id="@+id/id_c_video"
         android:layout_width="300dp"
-        android:layout_height="500dp"
-        android:visibility="gone" />
+        android:layout_height="500dp" />
     <EditText
         android:id="@+id/id_c_ettext"
         android:layout_width="match_parent"
